@@ -23,9 +23,9 @@ export const addPostAsync = createAsyncThunk(
   async (post: IPost) => {
     console.log(post)
     const response = await addPost(post)
-    const post = await response.json()
-    console.log(post)
-    return post
+    const newPost = await response.json()
+    console.log(newPost)
+    return newPost
   }
 );
 
@@ -34,9 +34,9 @@ export const editPostAsync = createAsyncThunk(
   async (post: IPost) => {
     console.log(post)
     const response = await editPost(post)
-    const post = await response.json()
-    console.log(post)
-    return post
+    const newPost = await response.json()
+    console.log(newPost)
+    return newPost
   }
 );
 
@@ -45,9 +45,9 @@ export const deletePostAsync = createAsyncThunk(
   async (post: IPost) => {
     console.log(post)
     const response = await editPost(post)
-    const post = await response.json()
-    console.log(post)
-    return post
+    const deletedPost = await response.json()
+    console.log(deletedPost)
+    return deletedPost
   }
 );
 
