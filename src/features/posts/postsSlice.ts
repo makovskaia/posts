@@ -92,15 +92,15 @@ export const postsSlice = createSlice({
         state.status = 'idle';
         console.log(action.payload, 'edit post success')
       })
-      .addCase(editPostAsync.pending, (state) => {
+      .addCase(deletePostAsync.pending, (state) => {
         state.status = 'loading';
         console.log('delete post loading')
       })
-      .addCase(editPostAsync.rejected, (state) => {
+      .addCase(deletePostAsync.rejected, (state) => {
         state.status = 'failed';
         console.log('delete post failed')
       })
-      .addCase(editPostAsync.fulfilled, (state, action) => {
+      .addCase(deletePostAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         console.log(action.payload, 'delete post success')
       })
