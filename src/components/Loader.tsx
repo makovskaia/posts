@@ -12,6 +12,10 @@ const styleBox = {
   p: 4,
 }
 
+const styleLoader = {
+	color: '#000000'
+}
+
 export function Loader({ visible }: LoaderProps){
 	
 	return (
@@ -19,9 +23,8 @@ export function Loader({ visible }: LoaderProps){
 			<Box
       			sx={styleBox}
     		>
-    			<CircularProgress size="3rem" color="#000" />
+    			<CircularProgress size="3rem" sx={styleLoader} />
     		</Box>
-			
 		</Modal>
 	)
 }
