@@ -10,3 +10,18 @@ export function addPost(post: IPost) {
 	});
   	return fetch(request)
 }
+
+export function editPost(post: IPost) {
+	const request = new Request(`${url}/${post.id}`, {
+  		method: "PATCH",
+  		body: JSON.stringify(post),
+	});
+  	return fetch(request)
+}
+
+export function deletePost(post: IPost) {
+	const request = new Request(`${url}/${post.id}`, {
+  		method: "DELETE",
+	});
+  	return fetch(request)
+}

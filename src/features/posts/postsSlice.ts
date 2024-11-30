@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
-import { fetchPosts, addPost } from './postsAPI';
+import { fetchPosts, addPost, editPost } from './postsAPI';
 
 
 const initialState: PostsState = {
@@ -23,12 +23,33 @@ export const addPostAsync = createAsyncThunk(
   async (post: IPost) => {
     console.log(post)
     const response = await addPost(post)
-    const posts = await response.json()
-    console.log(posts)
-    return posts
+    const post = await response.json()
+    console.log(post)
+    return post
   }
 );
 
+export const editPostAsync = createAsyncThunk(
+  'posts/editPost',
+  async (post: IPost) => {
+    console.log(post)
+    const response = await editPost(post)
+    const post = await response.json()
+    console.log(post)
+    return post
+  }
+);
+
+export const deletePostAsync = createAsyncThunk(
+  'posts/deletePost',
+  async (post: IPost) => {
+    console.log(post)
+    const response = await editPost(post)
+    const post = await response.json()
+    console.log(post)
+    return post
+  }
+);
 
 export const postsSlice = createSlice({
   name: 'posts',
@@ -48,16 +69,40 @@ export const postsSlice = createSlice({
         state.status = 'failed';
       })
       .addCase(addPostAsync.pending, (state) => {
-        // state.status = 'loading';
+        state.status = 'loading';
         console.log('add post loading')
       })
       .addCase(addPostAsync.rejected, (state) => {
-        // state.status = 'failed';
+        state.status = 'failed';
         console.log('add post failed')
       })
       .addCase(addPostAsync.fulfilled, (state, action) => {
-        // state.status = 'none';
+        state.status = 'idle';
         console.log(action.payload, 'add post success')
+      })
+      .addCase(editPostAsync.pending, (state) => {
+        state.status = 'loading';
+        console.log('edit post loading')
+      })
+      .addCase(editPostAsync.rejected, (state) => {
+        state.status = 'failed';
+        console.log('edit post failed')
+      })
+      .addCase(editPostAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        console.log(action.payload, 'edit post success')
+      })
+      .addCase(editPostAsync.pending, (state) => {
+        state.status = 'loading';
+        console.log('delete post loading')
+      })
+      .addCase(editPostAsync.rejected, (state) => {
+        state.status = 'failed';
+        console.log('delete post failed')
+      })
+      .addCase(editPostAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        console.log(action.payload, 'delete post success')
       })
 	}
 });
