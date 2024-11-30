@@ -1,25 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
-import { fetchPosts } from './postsAPI';
+import { fetchPosts, addPost } from './postsAPI';
 
-interface IPost {
-  id: number
-  title: string
-  body: string
-}
-
-type Posts = {
-  value: IPost[]
-}
-
-export interface PostsState {
-  value: Posts | null;
-  status: 'idle' | 'loading' | 'failed';
-}
 
 const initialState: PostsState = {
-  value: null,
-  status: 'idle',
+  value: [],
+  length: 0,
+  status: 'loading',
 };
 
 export const postsAsync = createAsyncThunk(
@@ -27,10 +14,21 @@ export const postsAsync = createAsyncThunk(
   async () => {
     const response = await fetchPosts()
     const posts = await response.json()
+    return posts
+  }
+);
+
+export const addPostAsync = createAsyncThunk(
+  'posts/addPost',
+  async (post: IPost) => {
+    console.log(post)
+    const response = await addPost(post)
+    const posts = await response.json()
     console.log(posts)
     return posts
   }
 );
+
 
 export const postsSlice = createSlice({
   name: 'posts',
@@ -48,10 +46,25 @@ export const postsSlice = createSlice({
       })
       .addCase(postsAsync.rejected, (state) => {
         state.status = 'failed';
-      });
+      })
+      .addCase(addPostAsync.pending, (state) => {
+        // state.status = 'loading';
+        console.log('add post loading')
+      })
+      .addCase(addPostAsync.rejected, (state) => {
+        // state.status = 'failed';
+        console.log('add post failed')
+      })
+      .addCase(addPostAsync.fulfilled, (state, action) => {
+        // state.status = 'none';
+        console.log(action.payload, 'add post success')
+      })
 	}
 });
 
-export const selectPosts= (state: RootState) => state.posts.value;
+export const selectPosts = (state: RootState) => state.posts.value;
+export const getNewPostId = (state: RootState) => state.posts.length;
+export const selectStatus = (state: RootState) => state.posts.status;
+
 
 export default postsSlice.reducer;

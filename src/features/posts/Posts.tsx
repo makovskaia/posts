@@ -1,18 +1,28 @@
-import React, { useState, useEffect } from 'react';
-
+// @ts-nocheck
+import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
-  postsAsync,
-  selectPosts
+  selectPosts,
 } from './postsSlice';
+import { Post } from '../../components/Post'
+
+const styles = {
+
+}
 
 export function Posts() {
   const posts = useAppSelector(selectPosts);
-  const dispatch = useAppDispatch();
-  useEffect(()=>{
-    dispatch(postsAsync())
-  }, [])
   return (
-    <div></div>
+    <>
+      {posts.map((p: IPost) => (
+        <Post
+          key={p.id}
+          id={p.id}
+          title={p.title}
+          body={p.body}
+          onEditPost={()=>{}}
+          onDeletePost={()=>{}}/>
+      ))}
+    </>
   )
 }
