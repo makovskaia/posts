@@ -53,6 +53,9 @@ export const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
+  	setStatus(state, action) {
+      state.status = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -118,6 +121,7 @@ export const postsSlice = createSlice({
 export const selectPosts = (state: RootState) => state.posts.value;
 export const getNewPostId = (state: RootState) => state.posts.length;
 export const selectStatus = (state: RootState) => state.posts.status;
+export const { setStatus } = postsSlice.actions
 
 
 export default postsSlice.reducer;

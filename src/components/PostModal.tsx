@@ -14,7 +14,8 @@ type PostModalProps = {
 	body: string,
 	state: 'closed'|'create'|'edit',
 	onSubmit: (title: string, body: string) => void,
-	onClose: () => void
+	onClose: () => void,
+	headerText: string
 }
 
 const styleBox = {
@@ -32,14 +33,15 @@ const styleInput = {
 	marginBottom: '5%'
 }
 
-export function PostModal({ title, body, state, onSubmit, onClose }: PostModalProps){
+export function PostModal({ title, body, state, onSubmit, onClose, headerText }: PostModalProps){
 	const [ titleNew, setTitle ] = useState<string>('')
 	const [ bodyNew, setBody ] = useState<string>('')
 	useEffect(()=>{
 		setTitle(title)
 		setBody(body)
 	},[title,body])
-	const headerText = state === 'edit' ? 'Edit Post' : state === 'create' ? 'Create Post' : ''
+	
+	 
 	return (
 		<Modal
 			open={state !== 'closed'}
@@ -53,7 +55,7 @@ export function PostModal({ title, body, state, onSubmit, onClose }: PostModalPr
 
     		>
     			<CardHeader>
-    				<Typography variant="h6" gutterBottom>{headerText}</Typography>
+    				<Typography variant="h6">headerText</Typography>
     			</CardHeader>
     			<CardContent>
 	      			<TextField
@@ -77,6 +79,7 @@ export function PostModal({ title, body, state, onSubmit, onClose }: PostModalPr
 	      		</CardContent>
 	      		<CardActions>
 	      			<Button 
+	      				disabled={!(titleNew.length && bodyNew.length)}
 	      				onClick={(e: any) => {
 		      				e.preventDefault();
 		      				onSubmit(titleNew, bodyNew)
