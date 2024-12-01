@@ -6,11 +6,13 @@ import {
   getNewPostId,
   addPostAsync,
   editPostAsync,
-  deletePostAsync
+  deletePostAsync,
+  setStatus
 } from './postsSlice';
 import { Post } from '../../components/Post'
 import { Header } from '../../components/Header'
 import { Loader } from '../../components/Loader'
+import { Error } from '../../components/Error'
 import { PostModal } from '../../components/PostModal'
 import { Posts } from './Posts'
 import Box from '@mui/material/Box';
@@ -55,8 +57,15 @@ export function Main() {
     dispatch(deletePostAsync(id))
   }
   
-  const onClose = () => setModalState('closed')
+  const onClose = () => {
+    setModalState('closed')
+    setTitle('')
+    setBody('')
+  }
 
+  const onErrorClose = () => {
+    dispatch(setStatus('idle'))
+  }
 
   return (
     <div>
@@ -64,17 +73,21 @@ export function Main() {
       <Loader
         visible={status === 'loading'}
       />
+      <Error
+        visible={status === 'failed'}
+        onClose={onErrorClose}
+      />
       <PostModal
         state={modalState}
         title={title}
         body={body}
         onSubmit={modalState === 'create' ? onSubmitCreatePost : onSubmitEditPost}
         onClose={onClose}
+        headerText={modalState === 'create' ? 'Create Post' : modalState === 'edit' ? 'Edit Post' : ''}
       />
-      <main>
-          {status === 'failed' ?
-            (<p>failed</p>)  : <Posts onEditPost={onEditPost} onDeletePost={onDeletePost}/>
-        }
+      <main> 
+          <Posts onEditPost={onEditPost} onDeletePost={onDeletePost}/>
+        
       </main>
       {/*<footer/>*/}
     </div>
