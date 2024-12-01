@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import postsReducer from '../features/posts/postsSlice';
 import { postsAPI } from '../features/posts/postsAPI'
-import { setupListeners } from '@reduxjs/toolkit/query'
+
 export const store = configureStore({
   reducer: {
     posts: postsReducer,
@@ -13,7 +13,6 @@ export const store = configureStore({
       },
       serializableCheck: false,
     }),
-   
 });
 
 export type AppDispatch = typeof store.dispatch;

@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
@@ -9,8 +9,8 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid2';
 
 type postsProps = {
-  onEditPost: (post: IPost) => void
-  onDeletePost: (id: number) => void
+  onEditPost: (post: IPost) => any,
+  onDeletePost: (id: number) => any
 }
 
 const style = {
