@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
-import { fetchPosts, addPost, editPost } from './postsAPI';
+import { fetchPosts, addPost, editPost, deletePost } from './postsAPI';
 
 
 const initialState: PostsState = {
@@ -42,12 +42,12 @@ export const editPostAsync = createAsyncThunk(
 
 export const deletePostAsync = createAsyncThunk(
   'posts/deletePost',
-  async (post: IPost) => {
-    console.log(post)
-    const response = await editPost(post)
+  async (id: number) => {
+    // console.log(post)
+    const response = await deletePost(id)
     const deletedPost = await response.json()
     console.log(deletedPost)
-    return deletedPost
+    return { id }
   }
 );
 
@@ -79,6 +79,8 @@ export const postsSlice = createSlice({
       .addCase(addPostAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         console.log(action.payload, 'add post success')
+        const newVal = [...state.value]
+        state.value = [...newVal, action.payload]
       })
       .addCase(editPostAsync.pending, (state) => {
         state.status = 'loading';
@@ -91,6 +93,10 @@ export const postsSlice = createSlice({
       .addCase(editPostAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         console.log(action.payload, 'edit post success')
+        const newVal = [...state.value]
+        const id = newVal.findIndex(el => el.id == action.payload.id)
+        newVal[id] = action.payload
+        state.value = newVal
       })
       .addCase(deletePostAsync.pending, (state) => {
         state.status = 'loading';
@@ -103,6 +109,10 @@ export const postsSlice = createSlice({
       .addCase(deletePostAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         console.log(action.payload, 'delete post success')
+        const newVal = [...state.value]
+        const id = newVal.findIndex(el => el.id == action.payload.id)
+        newVal.splice(id,1)
+        state.value = newVal
       })
 	}
 });

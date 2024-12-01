@@ -4,39 +4,73 @@ import {
   postsAsync,
   selectStatus,
   getNewPostId,
-  addPostAsync 
+  addPostAsync,
+  editPostAsync,
+  deletePostAsync
 } from './postsSlice';
 import { Post } from '../../components/Post'
 import { Header } from '../../components/Header'
+import { Loader } from '../../components/Loader'
 import { PostModal } from '../../components/PostModal'
 import { Posts } from './Posts'
 
 export function Main() {
-  const [ modalOpen, setModalOpen ] = useState(false)
+  const [ modalState, setModalState ] = useState<'closed'|'edit'|'create'>('closed')
   const status = useAppSelector(selectStatus);
-  const id = useAppSelector(getNewPostId)
+  const nextId = useAppSelector(getNewPostId)
+  const [id,setId] = useState(nextId)
+
+  const [title, setTitle] = useState('')
+  const [body, setBody] = useState('')
   const dispatch = useAppDispatch();
-  // useEffect(()=>{
-  //   dispatch(postsAsync())
-  // }, [])
+  
+  useEffect(()=>{
+    dispatch(postsAsync())
+  }, [])
+
   const onCreatePost = () => {
-      setModalOpen(true)
+      setModalState('create')
   }
-  const onSubmit = (title: string, body: string) => {
+  const onEditPost = (post: IPost) => {
+    setTitle(post.title)
+    setBody(post.body)
+    setId(post.id)
+    setModalState('edit')
+  }
+
+  const onSubmitCreatePost = (title: string, body: string) => {
     console.log(title, body, id)
     dispatch(addPostAsync({id, title, body}))
-    setModalOpen(false)
+    setModalState('closed')
+  }
+  const onSubmitEditPost = (title: string, body: string) => {
+    console.log(title, body, id)
+    dispatch(editPostAsync({id, title, body}))
+    setModalState('closed')
+  }
+
+  const onDeletePost = (id: number) => {
+    console.log(id)
+    dispatch(deletePostAsync(id))
   }
   
-  const onClose = () => setModalOpen(false)
+  const onClose = () => setModalState('closed')
+
+
   return (
     <div>
       <Header onCreatePost={onCreatePost} />
-      <PostModal open={modalOpen} title="" body="" onSubmit={onSubmit} onClose={onClose}/>
+      <Loader visible={status === 'loading'} />
+      <PostModal
+        state={modalState}
+        title={title}
+        body={body}
+        onSubmit={modalState === 'create' ? onSubmitCreatePost : onSubmitEditPost}
+        onClose={onClose}
+      />
       <main>
-        {status === 'loading' ?
-          (<p>loading</p>) : status === 'failed' ?
-            (<p>failed</p>)  : <Posts/>
+          {status === 'failed' ?
+            (<p>failed</p>)  : <Posts onEditPost={onEditPost} onDeletePost={onDeletePost}/>
         }
       </main>
       {/*<footer/>*/}

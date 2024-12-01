@@ -8,7 +8,12 @@ import { Post } from '../../components/Post'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid2';
 
-export function Posts() {
+type postsProps = {
+  onEditPost: (post: IPost) => void
+  onDeletePost: (id: number) => void
+}
+
+export function Posts({ onEditPost, onDeletePost }: postsProps) {
   const posts = useAppSelector(selectPosts);
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -21,8 +26,8 @@ export function Posts() {
                 id={p.id}
                 title={p.title}
                 body={p.body}
-                onEditPost={()=>{}}
-                onDeletePost={()=>{}}
+                onEditPost={onEditPost}
+                onDeletePost={onDeletePost}
               />
               
           </Grid>
