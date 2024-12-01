@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Modal, Box, TextField, Button } from '@mui/material'
 
 type PostModalProps = {
 	title: string,
 	body: string,
-	open: boolean,
+	state: 'closed'|'create'|'edit',
 	onSubmit: (title: string, body: string) => void,
 	onClose: () => void
 }
@@ -25,11 +25,15 @@ const styleInput = {
 	marginBottom: '5%'
 }
 
-export function PostModal({ title, body, open, onSubmit, onClose }: PostModalProps){
-	const [ titleNew, setTitle ] = useState<string>(title)
-	const [ bodyNew, setBody ] = useState<string>(body)
+export function PostModal({ title, body, state, onSubmit, onClose }: PostModalProps){
+	const [ titleNew, setTitle ] = useState<string>('')
+	const [ bodyNew, setBody ] = useState<string>('')
+	useEffect(()=>{
+		setTitle(title)
+		setBody(body)
+	},[title,body])
 	return (
-		<Modal open={open} onClose={onClose} >
+		<Modal open={state !== 'closed'} onClose={onClose} >
 			<Box
       			component="form"
       			sx={styleBox}
@@ -61,7 +65,7 @@ export function PostModal({ title, body, open, onSubmit, onClose }: PostModalPro
       				onSubmit(titleNew, bodyNew)
       				setTitle('')
       				setBody('')
-      			}}>Create Post</Button>
+      			}}>Submit</Button>
     		</Box>
 		</Modal>
 	)

@@ -8,8 +8,8 @@ type PostProps = {
 	id: number,
 	body: string,
 	title: string,
-	onEditPost: (id:number)=>{},
-	onDeletePost: (id:number)=>{},
+	onEditPost: (post: IPost)=>{},
+	onDeletePost: (id: number)=>{},
 
 }
 const Item = styled(Paper)(({ theme }) => ({
@@ -23,23 +23,19 @@ const Item = styled(Paper)(({ theme }) => ({
   }),
 }));
 
-// const cardStyle = {
-// 	width: '40%',
-// 	display: i
-// }
 const buttonStyle = {
 	float: 'right'
 }
 
-export const Post = (props: PostProps) => (
+export const Post = ({ id, title, body, onEditPost, onDeletePost }: PostProps) => (
 	<Item>
 		<CardContent>	
-			<Typography variant="h6" gutterBottom>{props.title}</Typography>
-			<Typography variant="body2" gutterBottom>{props.body}</Typography>
+			<Typography variant="h6" gutterBottom>{title}</Typography>
+			<Typography variant="body2" gutterBottom>{body}</Typography>
 		</CardContent>
 		<CardActions>
-			<Button sx={buttonStyle} size="small" onClick={()=>{props.onEditPost(props.id)}}><EditIcon/></Button>
-			<Button sx={buttonStyle} size="small" onClick={()=>{props.onDeletePost(props.id)}}><DeleteIcon/></Button>
+			<Button sx={buttonStyle} size="small" onClick={()=>{onEditPost({ id, title, body })}}><EditIcon/></Button>
+			<Button sx={buttonStyle} size="small" onClick={()=>{onDeletePost(id)}}><DeleteIcon/></Button>
 		</CardActions>
 	</Item>
 )
