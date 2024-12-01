@@ -1,10 +1,18 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import postsReducer from '../features/posts/postsSlice';
+import { postsAPI } from '../features/posts/postsAPI'
 
 export const store = configureStore({
   reducer: {
     posts: postsReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: postsAPI,
+      },
+      serializableCheck: false,
+    }),
 });
 
 export type AppDispatch = typeof store.dispatch;

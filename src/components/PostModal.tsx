@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Box, TextField, Button } from '@mui/material'
+import Modal from '@mui/material/Modal'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
 
 type PostModalProps = {
 	title: string,
@@ -43,6 +46,7 @@ export function PostModal({ title, body, state, onSubmit, onClose }: PostModalPr
     		>
 
       			<TextField
+      				autoFocus
       				variant="outlined"
       				label="Title"
       				fullWidth

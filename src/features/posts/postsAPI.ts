@@ -9,11 +9,19 @@ const url = 'https://jsonplaceholder.typicode.com/posts'
 //     'Content-type': 'application/json; charset=UTF-8',
 //   },
 // }
-export function fetchPosts() {
+
+// class PostRequest{
+// 	this.url = 'https://jsonplaceholder.typicode.com/posts/'
+// 	this
+// 	constructor(){
+
+// 	}
+// }
+function fetchPosts() {
   return fetch(url)
 }
 
-export function addPost(post: IPost) {
+function addPost(post: IPost) {
 	const request = new Request(url, {
   		method: "POST",
   		body: JSON.stringify({...post, userId: 1}),
@@ -24,7 +32,7 @@ export function addPost(post: IPost) {
   	return fetch(request)
 }
 
-export function editPost(post: IPost) {
+function editPost(post: IPost) {
 	const request = new Request(`${url}/${post.id}`, {
   		method: "PUT",
   		body: JSON.stringify({...post, userId: 1}),
@@ -35,9 +43,16 @@ export function editPost(post: IPost) {
   	return fetch(request)
 }
 
-export function deletePost(id: number) {
+function deletePost(id: number) {
 	const request = new Request(`${url}/${id}`, {
   		method: "DELETE",
 	});
   	return fetch(request)
+}
+
+export const postsAPI = {
+	fetchPosts,
+	addPost,
+	editPost,
+	deletePost
 }

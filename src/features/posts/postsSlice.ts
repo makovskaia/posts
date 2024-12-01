@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
-import { fetchPosts, addPost, editPost, deletePost } from './postsAPI';
+import { postsAPI } from './postsAPI';
 
 
 const initialState: PostsState = {
@@ -12,7 +12,7 @@ const initialState: PostsState = {
 export const postsAsync = createAsyncThunk(
   'posts/fetchPosts',
   async () => {
-    const response = await fetchPosts()
+    const response = await postsAPI.fetchPosts()
     const posts = await response.json()
     return posts
   }
@@ -22,7 +22,7 @@ export const addPostAsync = createAsyncThunk(
   'posts/addPost',
   async (post: IPost) => {
     console.log(post)
-    const response = await addPost(post)
+    const response = await postsAPI.addPost(post)
     const newPost = await response.json()
     console.log(newPost)
     return newPost
@@ -33,7 +33,7 @@ export const editPostAsync = createAsyncThunk(
   'posts/editPost',
   async (post: IPost) => {
     console.log(post)
-    const response = await editPost(post)
+    const response = await postsAPI.editPost(post)
     const newPost = await response.json()
     console.log(newPost)
     return newPost
@@ -44,7 +44,7 @@ export const deletePostAsync = createAsyncThunk(
   'posts/deletePost',
   async (id: number) => {
     // console.log(post)
-    const response = await deletePost(id)
+    const response = await postsAPI.deletePost(id)
     const deletedPost = await response.json()
     console.log(deletedPost)
     return { id }

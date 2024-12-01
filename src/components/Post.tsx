@@ -1,7 +1,11 @@
-import { Card, Typography, CardContent, CardActions, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
+
 import { experimentalStyled as styled } from '@mui/material/styles';
 
 type PostProps = {
