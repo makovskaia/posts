@@ -14,6 +14,7 @@ export const postsAsync = createAsyncThunk(
   async () => {
     const response = await postsAPI.fetchPosts()
     const posts = await response.json()
+    console.log(posts)
     return posts
   }
 );
@@ -21,7 +22,6 @@ export const postsAsync = createAsyncThunk(
 export const addPostAsync = createAsyncThunk(
   'posts/addPost',
   async (post: IPost) => {
-    console.log(post)
     const response = await postsAPI.addPost(post)
     const newPost = await response.json()
     console.log(newPost)
@@ -32,7 +32,6 @@ export const addPostAsync = createAsyncThunk(
 export const editPostAsync = createAsyncThunk(
   'posts/editPost',
   async (post: IPost) => {
-    console.log(post)
     const response = await postsAPI.editPost(post)
     const newPost = await response.json()
     console.log(newPost)
@@ -43,7 +42,6 @@ export const editPostAsync = createAsyncThunk(
 export const deletePostAsync = createAsyncThunk(
   'posts/deletePost',
   async (id: number) => {
-    // console.log(post)
     const response = await postsAPI.deletePost(id)
     const deletedPost = await response.json()
     console.log(deletedPost)

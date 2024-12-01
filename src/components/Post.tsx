@@ -27,8 +27,13 @@ const Item = styled(Paper)(({ theme }) => ({
   }),
 }));
 
-const buttonStyle = {
-	float: 'right'
+const cardActionStyle = {
+  alignSelf: "stretch",
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "flex-start",
+  p: 0
+
 }
 
 export const Post = ({ id, title, body, onEditPost, onDeletePost }: PostProps) => (
@@ -37,9 +42,9 @@ export const Post = ({ id, title, body, onEditPost, onDeletePost }: PostProps) =
 			<Typography variant="h6" gutterBottom>{title}</Typography>
 			<Typography variant="body2" gutterBottom>{body}</Typography>
 		</CardContent>
-		<CardActions>
-			<Button sx={buttonStyle} size="small" onClick={()=>{onEditPost({ id, title, body })}}><EditIcon/></Button>
-			<Button sx={buttonStyle} size="small" onClick={()=>{onDeletePost(id)}}><DeleteIcon/></Button>
+		<CardActions disableSpacing sx={cardActionStyle}>
+			<Button size="small" onClick={()=>{onEditPost({ id, title, body, userId: 11 })}}><EditIcon/></Button>
+			<Button size="small" onClick={()=>{onDeletePost(id)}}><DeleteIcon/></Button>
 		</CardActions>
 	</Item>
 )

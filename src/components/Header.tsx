@@ -6,9 +6,12 @@ import Toolbar from '@mui/material/Toolbar';
 type HeaderProps = {
 	onCreatePost: ()=>void
 }
+const style = {
+	padding: '0.2em'
+}
 export function Header({ onCreatePost }: HeaderProps) {
 	return (
-		<AppBar position="static">
+		<AppBar sx={style} position="static">
 			<Toolbar>
 				<Typography
 	            variant="h6"

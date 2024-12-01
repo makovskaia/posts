@@ -13,6 +13,7 @@ import { Header } from '../../components/Header'
 import { Loader } from '../../components/Loader'
 import { PostModal } from '../../components/PostModal'
 import { Posts } from './Posts'
+import Box from '@mui/material/Box';
 
 export function Main() {
   const [ modalState, setModalState ] = useState<'closed'|'edit'|'create'>('closed')
@@ -40,12 +41,12 @@ export function Main() {
 
   const onSubmitCreatePost = (title: string, body: string) => {
     console.log(title, body, id)
-    dispatch(addPostAsync({id, title, body}))
+    dispatch(addPostAsync({id, title, body, userId: 11}))
     setModalState('closed')
   }
   const onSubmitEditPost = (title: string, body: string) => {
     console.log(title, body, id)
-    dispatch(editPostAsync({id, title, body}))
+    dispatch(editPostAsync({id, title, body, userId: 11}))
     setModalState('closed')
   }
 
@@ -60,7 +61,9 @@ export function Main() {
   return (
     <div>
       <Header onCreatePost={onCreatePost} />
-      <Loader visible={status === 'loading'} />
+      <Loader
+        visible={status === 'loading'}
+      />
       <PostModal
         state={modalState}
         title={title}

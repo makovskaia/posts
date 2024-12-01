@@ -11,21 +11,27 @@ const styleBox = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  p: 4,
+  padding: '2rem'
 }
 
-const styleLoader = {
-	color: '#000000'
-}
 
 export function Loader({ visible }: LoaderProps){
 	
 	return (
-		<Modal open={visible} >
+		<Modal
+			open={visible}
+			disableAutoFocus
+			disableEnforceFocus
+			disableEscapeKeyDown
+			disableRestoreFocus
+			onClose={function(e,r){console.log(e,r)}}
+		>
 			<Box
       			sx={styleBox}
     		>
-    			<CircularProgress size="3rem" sx={styleLoader} />
+    			<CircularProgress
+    				size="50px"
+    			/>
     		</Box>
 		</Modal>
 	)

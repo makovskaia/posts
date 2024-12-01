@@ -13,10 +13,15 @@ type postsProps = {
   onDeletePost: (id: number) => void
 }
 
+const style = {
+  padding: '1.4em',
+  flexGrow: 1,
+}
+
 export function Posts({ onEditPost, onDeletePost }: postsProps) {
   const posts = useAppSelector(selectPosts);
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={style}>
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
         {posts.map((p: IPost) => (
           <Grid key={p.id} size={{ xs: 2, sm: 4, md: 4 }}>
