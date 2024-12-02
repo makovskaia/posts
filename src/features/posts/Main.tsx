@@ -42,18 +42,15 @@ export function Main() {
   }
 
   const onSubmitCreatePost = (title: string, body: string) => {
-    console.log(title, body, id)
     dispatch(addPostAsync({id, title, body, userId: 11}))
     setModalState('closed')
   }
   const onSubmitEditPost = (title: string, body: string) => {
-    console.log(title, body, id)
     dispatch(editPostAsync({id, title, body, userId: 11}))
     setModalState('closed')
   }
 
   const onDeletePost = (id: number) => {
-    console.log(id)
     dispatch(deletePostAsync(id))
   }
   
